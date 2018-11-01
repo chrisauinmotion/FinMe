@@ -15,6 +15,11 @@ const AppNavbar = () => {
                 <i className="fas fa-chart-line" /> Dashboard
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/trades" className="nav-link">
+                <i className="fas fa-file-invoice-dollar" /> Trades
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
