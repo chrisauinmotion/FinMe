@@ -24,7 +24,7 @@ class Positions extends Component {
   render() {
     const { positions, account } = this.props;
     //const { total } = this.state;
-    console.log(account);
+
     if (positions && account) {
       return (
         <div>

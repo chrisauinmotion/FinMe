@@ -32,6 +32,11 @@ class App extends Component {
                 />
                 <Route
                   exact
+                  path="/buyshares"
+                  component={UserIsAuthenticated(BuyShares)}
+                />
+                <Route
+                  exact
                   path="/login"
                   component={UserIsNotAuthenticated(Login)}
                 />
