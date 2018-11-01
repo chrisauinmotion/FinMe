@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppNavbar from './components/layout/AppNavbar';
 import Dashboard from './components/layout/Dashboard';
 import Login from './components/auth/Login';
+import { UserIsAuthenticated, UserIsNotAuthenticated } from './helpers/auth';
 import BuyShares from './components/positions/BuyShares';
 import Trades from './components/positions/Trades';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -18,9 +19,21 @@ class App extends Component {
             <AppNavbar />
             <div className="container">
               <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route exact path="/trades" component={Trades} />
-                <Route exact path="/login" component={Login} />
+                <Route
+                  exact
+                  path="/"
+                  component={UserIsAuthenticated(Dashboard)}
+                />
+                <Route
+                  exact
+                  path="/trades"
+                  component={UserIsAuthenticated(Trades)}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  component={UserIsNotAuthenticated(Login)}
+                />
               </Switch>
             </div>
           </div>
