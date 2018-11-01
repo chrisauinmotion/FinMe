@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AppNavbar from './components/layout/AppNavbar';
 import Dashboard from './components/layout/Dashboard';
+import Login from './components/auth/Login';
 import BuyShares from './components/positions/BuyShares';
 import Trades from './components/positions/Trades';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -19,6 +20,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/trades" component={Trades} />
+                <Route exact path="/login" component={Login} />
               </Switch>
             </div>
           </div>
