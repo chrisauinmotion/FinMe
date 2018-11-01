@@ -8,6 +8,9 @@ const Dashboard = () => {
       <div className="col-md-10">
         <Positions />
       </div>
+      <div className="col-md-2">
+        <Sidebar />
+      </div>
     </div>
   );
 };
