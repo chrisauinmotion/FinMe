@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 
 class Register extends Component {
   state = {
@@ -18,7 +16,11 @@ class Register extends Component {
 
     firebase
       .createUser({ email, password })
-      .catch(err => alert('That User Already Exists'));
+      .catch(err =>
+        alert(
+          'That User Etiher Already Exists or You Are Entering an Invalid Email.  Please Try again.'
+        )
+      );
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -59,7 +61,7 @@ class Register extends Component {
                 </div>
                 <input
                   type="submit"
-                  value="Login"
+                  value="Register"
                   className="btn btn-success btn-block"
                 />
               </form>
@@ -75,4 +77,4 @@ Register.propTypes = {
   firebase: PropTypes.object.isRequired
 };
 
-export default firebaseConnect()(Register);
+export default firestoreConnect()(Register);

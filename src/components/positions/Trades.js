@@ -7,20 +7,24 @@ import Spinner from '../layout/Spinner';
 
 class Trades extends Component {
   render() {
-    let { trades } = this.props;
+    let { trades, uid } = this.props;
 
     if (trades) {
-      // trades = trades.filter(
-      //   trade => trade.userId === this.props.firestore.data.account[0].userId
-      // );
+      trades = trades.filter(trade => trade.userId === uid);
 
       return (
         <div>
           <div className="row">
             <div className="col-md-6">
-              <h2>
-                <i className="fas fa-file-invoice-dollar" /> Trades
-              </h2>
+              {trades.length ? (
+                <h2>
+                  <i className="fas fa-file-invoice-dollar" /> Trades
+                </h2>
+              ) : (
+                <h2>
+                  <i className="fas fa-file-invoice-dollar" /> No Trades
+                </h2>
+              )}
             </div>
           </div>
 
@@ -35,15 +39,16 @@ class Trades extends Component {
               </tr>
             </thead>
             <tbody>
-              {trades.map(trade => (
-                <tr key={trade.id}>
-                  <td>{trade.companyName}</td>
-                  <td>{trade.ticker}</td>
-                  <td>{trade.sharesPurchased}</td>
-                  <td>${parseFloat(trade.priceAtPurchase).toFixed(2)}</td>
-                  <td>{trade.date}</td>
-                </tr>
-              ))}
+              {trades.length &&
+                trades.map(trade => (
+                  <tr key={trade.id}>
+                    <td>{trade.companyName}</td>
+                    <td>{trade.ticker}</td>
+                    <td>{trade.sharesPurchased}</td>
+                    <td>${parseFloat(trade.priceAtPurchase).toFixed(2)}</td>
+                    <td>{trade.date}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -62,6 +67,7 @@ Trades.propTypes = {
 export default compose(
   firestoreConnect([{ collection: 'trades' }]),
   connect((state, props) => ({
-    trades: state.firestore.ordered.trades
+    trades: state.firestore.ordered.trades,
+    uid: state.firebase.auth.uid
   }))
 )(Trades);

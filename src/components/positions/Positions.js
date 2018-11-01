@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -12,20 +11,31 @@ class Positions extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    //const { positions, account } = props;
-    // if (positions) {
-
-    //   // return { total };
-    // }
+    let { account, uid, positions } = props;
+    if (account && uid && positions) {
+      return { account, positions, uid };
+    }
 
     return null;
   }
 
-  render() {
-    const { positions, account } = this.props;
-    //const { total } = this.state;
+  onClick = e => {
+    e.preventDefault();
+    const { firestore, uid } = this.props;
+    const newAccount = {
+      balance: '5000',
+      userId: uid
+    };
+    firestore.add({ collection: 'account' }, newAccount);
+  };
 
-    if (positions && account) {
+  render() {
+    let { positions, account, uid } = this.props;
+
+    if (positions && account && uid) {
+      account = account.filter(account => account.userId === uid)[0];
+      positions = positions.filter(position => position.userId === uid);
+
       return (
         <div>
           <div className="row">
@@ -35,12 +45,24 @@ class Positions extends Component {
               </h2>
             </div>
             <div className="col-md-6">
-              <h5 className="text-right text-secondary">
-                Acc Balance:{' '}
-                <span className="text-primary">
-                  ${parseFloat(account[0].balance).toFixed(2)}
-                </span>
-              </h5>
+              {console.log(account)}
+              {account ? (
+                <h5 className="text-right text-secondary">
+                  Acc Balance:{' '}
+                  <span className="text-primary">
+                    ${parseFloat(account.balance).toFixed(2)}
+                  </span>
+                </h5>
+              ) : (
+                <button
+                  onClick={e =>
+                    this.onClick(e, this.state.ticker, this.state.shares)
+                  }
+                  className="btn btn-secondary btn-block"
+                >
+                  Open Account
+                </button>
+              )}
             </div>
           </div>
 
@@ -53,13 +75,16 @@ class Positions extends Component {
               </tr>
             </thead>
             <tbody>
-              {positions.map(position => (
-                <tr key={position.id}>
-                  <td>{position.companyName}</td>
-                  <td>{position.ticker}</td>
-                  <td>${parseFloat(position.totalValAtPurchase).toFixed(2)}</td>
-                </tr>
-              ))}
+              {positions &&
+                positions.map(position => (
+                  <tr key={position.id}>
+                    <td>{position.companyName}</td>
+                    <td>{position.ticker}</td>
+                    <td>
+                      ${parseFloat(position.totalValAtPurchase).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -76,9 +101,10 @@ Positions.propTypes = {
 };
 
 export default compose(
-  firestoreConnect([{ collection: 'positions' }, { collection: 'account' }]),
+  firestoreConnect([{ collection: 'account' }, { collection: 'positions' }]),
   connect((state, props) => ({
+    account: state.firestore.ordered.account,
     positions: state.firestore.ordered.positions,
-    account: state.firestore.ordered.account
+    uid: state.firebase.auth.uid
   }))
 )(Positions);
