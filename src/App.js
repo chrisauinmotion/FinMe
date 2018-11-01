@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppNavbar from './components/layout/AppNavbar';
 import Dashboard from './components/layout/Dashboard';
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './helpers/auth';
 import BuyShares from './components/positions/BuyShares';
 import Trades from './components/positions/Trades';
@@ -33,6 +34,11 @@ class App extends Component {
                   exact
                   path="/login"
                   component={UserIsNotAuthenticated(Login)}
+                />
+                <Route
+                  exact
+                  path="/register"
+                  component={UserIsNotAuthenticated(Register)}
                 />
               </Switch>
             </div>
