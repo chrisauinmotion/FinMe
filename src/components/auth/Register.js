@@ -18,7 +18,7 @@ class Register extends Component {
       .createUser({ email, password })
       .catch(err =>
         alert(
-          'That User Etiher Already Exists or You Are Entering an Invalid Email.  Please Try again.'
+          'That User Either Already Exists or You Are Entering an Invalid Email.  Please Try again.'
         )
       );
   };
