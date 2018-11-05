@@ -80,7 +80,7 @@ class BuyShares extends Component {
     const newTrade = {
       accountId: account.id,
       companyName,
-      ticker,
+      ticker: ticker.toUpperCase(),
       sharesPurchased: shares,
       date,
       priceAtPurchase: (+quotedPricePerShare.toFixed(0)).toString(),

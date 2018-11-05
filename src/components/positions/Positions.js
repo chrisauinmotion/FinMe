@@ -25,9 +25,8 @@ class Positions extends Component {
 
   onMouseEnter = async e => {
     let { positions } = this.props;
-
     const tickers = [];
-    // positions = positions.filter(position => position.userId === uid);
+
     positions.forEach(position => tickers.push(position.ticker));
     let latestMktInfo = [];
 
@@ -126,6 +125,7 @@ class Positions extends Component {
                       onMouseEnter={this.onMouseEnter}
                       onMouseLeave={this.onMouseLeave}
                     >
+                      {' '}
                       <td>{position.ticker}</td>
                       <td>{position.sharesOwned}</td>
                       <td>${parseFloat(position.open).toFixed(2)}</td>
