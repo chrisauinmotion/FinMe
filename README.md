@@ -1,4 +1,4 @@
-# TTP-FS20180728
+# FinMe
  A web based stock portfolio app developed using React, Redux, Firebase &amp; Firestore
 
 # User Stories
